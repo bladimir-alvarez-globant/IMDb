@@ -1,0 +1,56 @@
+ext {
+    kotlin_version = "1.7.20"
+
+    //Base presentation dependencies
+    androidx_appcompat_version = '1.6.1'
+    com_google_android_material_version = '1.9.0'
+
+    //Base
+    androidx_core_version = '1.10.1'
+
+    lifecycle_version = '2.6.1'
+
+    //Compose
+    androidx_activity_compose_version = '1.5.1'
+
+    //UI tests
+    androidx_test_ext_junit_version = '1.1.5'
+    androidx_test_core_version = '1.6.0-alpha01'
+    androidx_test_espresso_version = '3.5.1'
+    androidx_compose_ui_test_junit4_version = '1.4.3'
+
+    // Retrofit
+    retrofit_version = '2.9.0'
+
+    // Dagger
+    dagger_version = '2.38.1'
+
+    // Hilt
+    hilt_version = '2.44'
+
+    // Jetpack Compose
+    compose_version = '1.0.0'
+
+    // Glide
+    glide_version = '4.12.0'
+    glide_compose_version = '1.0.0-alpha.1'
+
+    // Room
+    room_version = '2.4.0'
+
+    //Moshi
+    moshi_version = '1.11.0'
+    assertj_version = '3.19.0'
+
+    // Tests
+    junit_version  = '5.7.0'
+    mock_version = '1.10.5'
+    assertj_version = '3.19.0'
+    coroutines_test_version = '1.4.2'//'1.6.4'
+    core_testing_version = '2.1.0'
+    androidx_junit_version = '1.1.2'
+    mockwebserver_version = '4.10.0'
+    androidx_test_runner_version = '1.4.0'
+    androidx_test_ext_junit_version = '1.1.5'
+    junit_kotlin_version = '4.13.2'
+}
