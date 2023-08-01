@@ -3,10 +3,10 @@ package com.bladoae.imdb.requestmanager.model
 import com.google.gson.annotations.SerializedName
 
 data class TopRatedResponse(
-    val page: Int,
-    val results: List<MovieDto>,
+    val page: Int? = null,
+    val results: List<MovieDto>? = null,
     @SerializedName("total_pages")
-    val totalPages: Int,
+    val totalPages: Int? = null,
     @SerializedName("total_results")
-    val totalResults: Int
+    val totalResults: Int? = null
 )
