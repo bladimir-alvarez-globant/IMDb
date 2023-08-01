@@ -1,21 +1,10 @@
-package com.bladoae.imdb.databasemanager.entities
+package com.bladoae.imdb.domain.model
 
-import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.bladoae.imdb.databasemanager.RoomConverters
-import kotlinx.parcelize.Parcelize
-
-@Entity(tableName = "movie")
-@TypeConverters(RoomConverters::class)
-@Parcelize
-data class MovieEntity(
-    @PrimaryKey(autoGenerate = false)
-    val id: Int = 0,
+data class Movie(
     val adult: Boolean? = null,
     val backdropPath: String? = null,
     val genreIds: List<Int>? = null,
+    val id: Int? = null,
     val originalLanguage: String? = null,
     val originalTitle: String? = null,
     val overview: String? = null,
@@ -26,4 +15,4 @@ data class MovieEntity(
     val video: Boolean? = null,
     val voteAverage: Double? = null,
     val voteCount: Int? = null
-) : Parcelable
+)

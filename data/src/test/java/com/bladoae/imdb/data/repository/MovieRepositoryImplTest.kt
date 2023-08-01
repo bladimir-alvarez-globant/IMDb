@@ -2,7 +2,6 @@ package com.bladoae.imdb.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bladoae.imdb.base.common.Resource
-import com.bladoae.imdb.base.test.MainCoroutineRule
 import com.bladoae.imdb.data.apiservice.MovieApiService
 import com.bladoae.imdb.data.mappers.toTopRated
 import com.bladoae.imdb.databasemanager.daos.MovieDao
@@ -30,9 +29,6 @@ class MovieRepositoryImplTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
-
-    @get:Rule
-    var mainCoroutineRule = MainCoroutineRule()
 
     private lateinit var movieRepositoryImpl: MovieRepositoryImpl
 
