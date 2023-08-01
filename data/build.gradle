@@ -42,7 +42,6 @@ dependencies {
     implementation project(':base')
     implementation project(':framework:requestmanager')
     implementation project(':framework:databasemanager')
-    implementation project(':domain')
 
     project.base_dependencies.each { item ->
         add(item.configuration, item.dependency, item.options)
