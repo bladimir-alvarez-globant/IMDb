@@ -3,6 +3,8 @@ package com.bladoae.imdb.data.repository
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bladoae.imdb.base.common.Resource
 import com.bladoae.imdb.data.apiservice.MovieApiService
+import com.bladoae.imdb.data.mappers.toMovie
+import com.bladoae.imdb.data.mappers.toMovieEntity
 import com.bladoae.imdb.data.mappers.toTopRated
 import com.bladoae.imdb.databasemanager.daos.MovieDao
 import com.bladoae.imdb.domain.model.TopRated
@@ -52,14 +54,14 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `when get pokemon list response is success`() = runBlocking {
-        val apiKey = "11111"
+    fun `when get top rated movies response is success`() = runBlocking {
         val movieTitle = "Transformers"
+        val movie = MovieDto(
+            id = 1000,
+            title = "Transformers"
+        )
         val movies = listOf(
-            MovieDto(
-                id = 1000,
-                title = "Transformers"
-            )
+            movie
         )
         val expectedResponse = Resource.Success(
             TopRatedResponse(
@@ -70,21 +72,22 @@ class MovieRepositoryImplTest {
             )
         )
 
+        val movieEntity = movie.toMovie().toMovieEntity()
         coEvery {
-            movieDao.insertMovie(any())
+            movieDao.insertMovie(listOf(movieEntity))
         } returns Unit
 
         coEvery {
-            movieApiService.getTopRatedMovies(apiKey)
+            movieApiService.getTopRatedMovies()
         } returns flowOf(expectedResponse)
 
         var actualResponse = TopRated()
         launch(dispatcher) {
-            movieRepositoryImpl.getTopRatedMovies(apiKey)
+            movieRepositoryImpl.getTopRatedMovies()
                 .collect { response -> actualResponse = response.data ?: TopRated() }
         }
 
-        coVerify(exactly = 1) { movieApiService.getTopRatedMovies(apiKey) }
+        coVerify(exactly = 1) { movieApiService.getTopRatedMovies() }
         assertEquals(
             expectedResponse.data?.toTopRated(),
             actualResponse
