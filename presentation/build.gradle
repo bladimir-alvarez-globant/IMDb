@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id "com.android.library"
     id 'org.jetbrains.kotlin.android'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-parcelize'
@@ -11,7 +11,7 @@ apply plugin: 'kotlin-kapt'
 apply from: "${rootProject.getRootDir()}/buildconfig/dependencies.gradle"
 
 android {
-    namespace 'com.bladoae.imdb'
+    namespace 'com.bladoae.imdb.presentation'
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -28,12 +28,9 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_BE_URL", "\"https://api.themoviedb.org/3/\"")
-            buildConfigField("String", "API_KEY", "\"c5c47722a4adcc77f6e84f28a48b857a\"")
+
         }
         release {
-            buildConfigField("String", "BASE_BE_URL", "\"https://api.themoviedb.org/3/\"")
-            buildConfigField("String", "API_KEY", "\"c5c47722a4adcc77f6e84f28a48b857a\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -61,8 +58,6 @@ android {
 dependencies {
     implementation project(':base')
     implementation project(':domain')
-    implementation project(':data')
-    implementation project(':presentation')
 
     project.base_dependencies.each { item ->
         add(item.configuration, item.dependency, item.options)

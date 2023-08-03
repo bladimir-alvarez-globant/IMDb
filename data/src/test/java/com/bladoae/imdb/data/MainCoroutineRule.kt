@@ -1,4 +1,4 @@
-package com.bladoae.imdb.base.test
+package com.bladoae.imdb.data
 
 import kotlin.coroutines.ContinuationInterceptor
 import kotlinx.coroutines.Dispatchers

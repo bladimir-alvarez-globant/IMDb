@@ -20,9 +20,9 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieDao: MovieDao,
     private val dispatcher: CoroutineContext
 ) : MovieRepository {
-    override suspend fun getTopRatedMovies(apiKey: String): Flow<Resource<TopRated>> {
+    override suspend fun getTopRatedMovies(): Flow<Resource<TopRated>> {
         return flow {
-            movieApiService.getTopRatedMovies(apiKey)
+            movieApiService.getTopRatedMovies()
                 .map { response ->
                     if(response is Resource.Success) {
                         return@map Resource.Success(

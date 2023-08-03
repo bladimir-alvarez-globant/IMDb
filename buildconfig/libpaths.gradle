@@ -21,6 +21,8 @@ ext {
     androidx_compose_ui_graphics = "androidx.compose.ui:ui-graphics"
     androidx_compose_ui_tooling_preview = "androidx.compose.ui:ui-tooling-preview"
     androidx_compose_material3 = "androidx.compose.material3:material3"
+    androidx_navigation_compose = "androidx.navigation:navigation-compose:$androidx_navigation_compose_version"
+    androidx_hilt_navigation_compose = "androidx.hilt:hilt-navigation-compose:$androidx_hilt_navigation_compose_version"
 
     //UI tests
     androidx_test_ext_junit = "androidx.test.ext:junit:${androidx_test_ext_junit_version}"

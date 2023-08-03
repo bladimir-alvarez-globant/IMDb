@@ -24,7 +24,9 @@ ext {
             [configuration: "api", dependency: androidx_compose_ui],
             [configuration: "api", dependency: androidx_compose_ui_graphics],
             [configuration: "api", dependency: androidx_compose_ui_tooling_preview],
-            [configuration: "api", dependency: androidx_compose_material3]
+            [configuration: "api", dependency: androidx_compose_material3],
+            [configuration: "api", dependency: androidx_navigation_compose],
+            [configuration: "api", dependency: androidx_hilt_navigation_compose]
     ]
 
     //UI tests

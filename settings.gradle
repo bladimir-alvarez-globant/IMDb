@@ -14,8 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "IMDb"
 include ':app'
-include ':domain'
 include ':data'
-include ':base'
 include ':framework:databasemanager'
 include ':framework:requestmanager'
+include ':domain'
+include ':base'
+include ':presentation'

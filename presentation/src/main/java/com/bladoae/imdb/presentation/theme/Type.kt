@@ -1,4 +1,4 @@
-package com.bladoae.imdb.ui.theme
+package com.bladoae.imdb.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

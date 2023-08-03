@@ -1,56 +1,13 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-android-extensions'
+    id 'java-library'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-
-apply from: "${rootProject.getRootDir()}/buildconfig/dependencies.gradle"
-
-android {
-    namespace 'com.bladoae.imdb.base'
-    compileSdk rootProject.compileSdkVersion
-
-    defaultConfig {
-        minSdk rootProject.minSdkVersion
-        targetSdk rootProject.targetSdkVersion
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        debug {
-            buildConfigField("String", "BASE_BE_URL", "\"https://api.themoviedb.org/3/\"")
-        }
-        release {
-            buildConfigField("String", "BASE_BE_URL", "\"https://api.themoviedb.org/3/\"")
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    buildFeatures {
-        buildConfig = true
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
-    project.base_dependencies.each { item ->
-        add(item.configuration, item.dependency, item.options)
-    }
-    project.hilt_dependecies.each { item ->
-        add(item.configuration, item.dependency, item.options)
-    }
-    project.test_dependencies.each { item ->
-        add(item.configuration, item.dependency, item.options)
-    }
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2'
 }
