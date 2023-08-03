@@ -2,6 +2,7 @@ package com.bladoae.imdb.data.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.bladoae.imdb.base.common.Resource
+import com.bladoae.imdb.data.MainCoroutineRule
 import com.bladoae.imdb.data.apiservice.MovieApiService
 import com.bladoae.imdb.data.mappers.toMovie
 import com.bladoae.imdb.data.mappers.toMovieEntity
@@ -32,6 +33,9 @@ class MovieRepositoryImplTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
+
     private lateinit var movieRepositoryImpl: MovieRepositoryImpl
 
     @MockK
@@ -40,12 +44,10 @@ class MovieRepositoryImplTest {
     @MockK
     private lateinit var movieDao: MovieDao
 
-    private val dispatcher = Dispatchers.Main
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        movieRepositoryImpl = MovieRepositoryImpl(movieApiService, movieDao, dispatcher)
+        movieRepositoryImpl = MovieRepositoryImpl(movieApiService, movieDao, Dispatchers.IO)
     }
 
     @After
@@ -82,7 +84,7 @@ class MovieRepositoryImplTest {
         } returns flowOf(expectedResponse)
 
         var actualResponse = TopRated()
-        launch(dispatcher) {
+        launch {
             movieRepositoryImpl.getTopRatedMovies()
                 .collect { response -> actualResponse = response.data ?: TopRated() }
         }
