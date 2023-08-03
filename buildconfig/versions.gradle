@@ -27,9 +27,11 @@ ext {
 
     // Hilt
     hilt_version = '2.44'
+    androidx_hilt_navigation_compose_version = '1.0.0'
 
     // Jetpack Compose
     compose_version = '1.0.0'
+    androidx_navigation_compose_version = '2.5.3'
 
     // Glide
     glide_version = '4.12.0'

@@ -24,6 +24,11 @@ object AppModule {
 
     @Provides
     @Singleton
+    @Named("apiKey")
+    fun apiKeyProvider(): String = BuildConfig.API_KEY
+
+    @Provides
+    @Singleton
     fun provideCoroutineContext(): CoroutineContext = Dispatchers.IO
 
     @Provides
