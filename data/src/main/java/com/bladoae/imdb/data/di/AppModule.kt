@@ -30,9 +30,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideMovieApiService(
-        service: ApiService
+        service: ApiService,
+        @Named("apiKey") apiKey: String,
     ): MovieApiService {
-        return MovieApiServiceImpl(service)
+        return MovieApiServiceImpl(service, apiKey)
     }
 
     @Provides

@@ -5,5 +5,5 @@ import com.bladoae.imdb.domain.model.TopRated
 import kotlinx.coroutines.flow.Flow
 
 interface GetTopRatedMoviesUseCase {
-    suspend operator fun invoke(apiKey: String): Flow<Resource<TopRated>>
+    suspend operator fun invoke(): Flow<Resource<TopRated>>
 }

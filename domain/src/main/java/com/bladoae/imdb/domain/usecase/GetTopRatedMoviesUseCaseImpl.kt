@@ -13,9 +13,9 @@ class GetTopRatedMoviesUseCaseImpl(
     private val dispatcher: CoroutineContext
 ) : GetTopRatedMoviesUseCase {
 
-    override suspend operator fun invoke(apiKey: String): Flow<Resource<TopRated>> {
+    override suspend operator fun invoke(): Flow<Resource<TopRated>> {
         return flow {
-            movieRepository.getTopRatedMovies(apiKey)
+            movieRepository.getTopRatedMovies()
                 .collect { response: Resource<TopRated> ->
                     emit(response)
                 }

@@ -9,27 +9,31 @@ import com.bladoae.imdb.domain.model.TopRated
 import com.bladoae.imdb.domain.usecase.GetTopRatedMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import javax.inject.Named
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    @Named("apiKey") private val apiKey: String,
-    private val dispatcher: CoroutineContext
+    private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase
 ) : ViewModel() {
 
     private val _topRatedMovies = MutableLiveData<Resource<TopRated>>()
-    val topRatedMovies: LiveData<Resource<TopRated>> = _topRatedMovies
+    val topRatedMovies: LiveData<Resource<TopRated>> by lazy { _topRatedMovies.apply { getTopRatedMovies() } }
 
     private fun getTopRatedMovies() {
-        viewModelScope.launch(dispatcher) {
-            _topRatedMovies.value = Resource.Loading()
-            getTopRatedMoviesUseCase(apiKey).collect { response ->
-                _topRatedMovies.value = response
+        _topRatedMovies.value = Resource.Loading()
+        viewModelScope.launch {
+            getTopRatedMoviesUseCase().collect { response ->
+                withContext(Dispatchers.Main) {
+                    _topRatedMovies.value = response
+                }
             }
         }
+    }
+
+    fun onRetry() {
+        getTopRatedMovies()
     }
 
 }
