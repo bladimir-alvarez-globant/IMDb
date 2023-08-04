@@ -90,4 +90,8 @@ ext {
             [configuration: "androidTestImplementation", dependency: androidx_test_ext_junit],
             [configuration: "testImplementation", dependency: junit_kotlin],
     ]
+
+    androidx_core_splashscreen_dependencies = [
+            [configuration: "api", dependency: androidx_core_splashscreen]
+    ]
 }
