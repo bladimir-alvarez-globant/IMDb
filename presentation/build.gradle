@@ -98,4 +98,8 @@ dependencies {
     project.test_dependencies.each { item ->
         add(item.configuration, item.dependency, item.options)
     }
+
+    project.androidx_core_splashscreen_dependencies.each { item ->
+        add(item.configuration, item.dependency, item.options)
+    }
 }
