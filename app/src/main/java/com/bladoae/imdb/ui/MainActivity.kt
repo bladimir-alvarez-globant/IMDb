@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bladoae.imdb.presentation.home.HomeScreen
+import com.bladoae.imdb.presentation.login.LoginScreen
 import com.bladoae.imdb.presentation.theme.IMDbTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +23,10 @@ class MainActivity : ComponentActivity() {
 
             IMDbTheme {
                 // A surface container using the 'background' color from the theme
-                NavHost(navController, startDestination = "home") {
+                NavHost(navController, startDestination = "login") {
+                    composable(route = "login") {
+                        LoginScreen(navController)
+                    }
                     composable(route = "home") {
                         HomeScreen(navController)
                     }
