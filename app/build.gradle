@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.dagger.hilt.android'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
 
 apply plugin: 'kotlin-android'
@@ -63,6 +64,7 @@ dependencies {
     implementation project(':domain')
     implementation project(':data')
     implementation project(':presentation')
+    implementation project(':framework:usermanager')
 
     project.base_dependencies.each { item ->
         add(item.configuration, item.dependency, item.options)
@@ -73,6 +75,8 @@ dependencies {
     }
 
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
+
+    implementation 'com.google.firebase:firebase-auth:22.1.1'
 
     //Compose
     implementation platform('androidx.compose:compose-bom:2022.10.00')

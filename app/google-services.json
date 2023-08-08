@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "630200840781",
+    "project_id": "imdb-951a5",
+    "storage_bucket": "imdb-951a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630200840781:android:b87c8e466e850ec7596204",
+        "android_client_info": {
+          "package_name": "com.bladoae.imdb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630200840781-e6vebm6gvgeh45okpqjlt62l34cc3uqm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUP3ucmPEGe5Kbygz3EXZboxs8ALvfRbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630200840781-e6vebm6gvgeh45okpqjlt62l34cc3uqm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
