@@ -5,10 +5,13 @@ import com.bladoae.imdb.domain.repository.MovieRepository
 import com.bladoae.imdb.domain.repository.UserRepository
 import com.bladoae.imdb.domain.usecase.GetTopRatedMoviesUseCase
 import com.bladoae.imdb.domain.usecase.GetTopRatedMoviesUseCaseImpl
+import com.bladoae.imdb.domain.usecase.IsUserLoggedInUseCase
+import com.bladoae.imdb.domain.usecase.IsUserLoggedInUseCaseImpl
 import com.bladoae.imdb.domain.usecase.LoginUserUseCase
 import com.bladoae.imdb.domain.usecase.LoginUserUseCaseImpl
 import com.bladoae.imdb.domain.usermanager.UserAuthentication
 import com.bladoae.imdb.usermanager.UserAuthenticationImpl
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,8 +48,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserAuthentication() : UserAuthentication {
-        return UserAuthenticationImpl()
+    fun provideUserAuthentication(
+        firebaseAuth: FirebaseAuth
+    ) : UserAuthentication {
+        return UserAuthenticationImpl(firebaseAuth)
     }
 
     @Provides
@@ -54,5 +59,11 @@ object AppModule {
     fun provideLoginUserUseCase(
         userRepository: UserRepository
     ): LoginUserUseCase = LoginUserUseCaseImpl(userRepository)
+
+    @Provides
+    @Singleton
+    fun provideIsUserLoggedInUseCaseUseCase(
+        userRepository: UserRepository
+    ): IsUserLoggedInUseCase = IsUserLoggedInUseCaseImpl(userRepository)
 
 }

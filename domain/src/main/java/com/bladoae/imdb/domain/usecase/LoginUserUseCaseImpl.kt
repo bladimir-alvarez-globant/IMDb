@@ -7,8 +7,12 @@ class LoginUserUseCaseImpl constructor(
 ) : LoginUserUseCase {
 
     override operator fun invoke(email: String, password: String, callback: (isSuccessful: Boolean) -> Unit) {
-        userRepository.login(email, password) {response ->
-            callback.invoke(response)
+        if(!userRepository.isUserLoggedIn()) {
+            userRepository.login(email, password) { response ->
+                callback.invoke(response)
+            }
+        } else {
+            callback.invoke(true)
         }
     }
 

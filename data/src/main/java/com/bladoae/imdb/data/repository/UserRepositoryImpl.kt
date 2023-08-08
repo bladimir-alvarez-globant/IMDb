@@ -14,4 +14,6 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun isUserLoggedIn() = userAuthentication.isUserLoggedIn()
+
 }

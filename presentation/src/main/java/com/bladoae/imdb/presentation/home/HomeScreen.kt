@@ -43,9 +43,6 @@ private fun HomeContent(
             is Resource.Error -> {
                 ShowError(onRetry)
             }
-            is Resource.Content -> {
-
-            }
         }
     }
 }
