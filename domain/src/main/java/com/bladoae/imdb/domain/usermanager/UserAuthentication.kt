@@ -1,6 +1,8 @@
 package com.bladoae.imdb.domain.usermanager
 
+import kotlinx.coroutines.flow.Flow
+
 interface UserAuthentication {
-    fun login(email: String, password: String, callback: (isSuccessful: Boolean) -> Unit)
-    fun isUserLoggedIn(): Boolean
+    suspend fun login(email: String, password: String) : Flow<Boolean>
+    suspend fun isUserLoggedIn(): Boolean
 }

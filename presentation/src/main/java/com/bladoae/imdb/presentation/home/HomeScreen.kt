@@ -13,8 +13,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bladoae.imdb.base.common.Resource
 import com.bladoae.imdb.domain.model.TopRated
-import com.bladoae.imdb.presentation.common.ShowError
-import com.bladoae.imdb.presentation.common.ShowLoading
+import com.bladoae.imdb.presentation.common.ErrorMessage
+import com.bladoae.imdb.presentation.common.LoadingMessage
 import com.bladoae.imdb.presentation.theme.IMDbTheme
 
 @Composable
@@ -36,12 +36,12 @@ private fun HomeContent(
 ) {
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         when(uiState.value) {
-            is Resource.Loading -> ShowLoading()
+            is Resource.Loading -> LoadingMessage()
             is Resource.Success -> {
                 Greeting("Android")
             }
             is Resource.Error -> {
-                ShowError(onRetry)
+                ErrorMessage(onRetry)
             }
         }
     }

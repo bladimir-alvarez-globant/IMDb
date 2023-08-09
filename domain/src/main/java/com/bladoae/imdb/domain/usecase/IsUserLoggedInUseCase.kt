@@ -1,5 +1,5 @@
 package com.bladoae.imdb.domain.usecase
 
 interface IsUserLoggedInUseCase {
-    operator fun invoke(): Boolean
+    suspend operator fun invoke(): Boolean
 }
