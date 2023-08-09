@@ -33,7 +33,7 @@ import com.bladoae.imdb.base.common.Resource
 import com.bladoae.imdb.base.utils.isValidEmail
 import com.bladoae.imdb.presentation.R
 import com.bladoae.imdb.presentation.common.InputTextBox
-import com.bladoae.imdb.presentation.common.ShowLoading
+import com.bladoae.imdb.presentation.common.LoadingMessage
 import com.bladoae.imdb.presentation.common.SimpleButton
 import com.bladoae.imdb.presentation.theme.IMDbTheme
 
@@ -79,7 +79,7 @@ private fun LoginContent(
                 painter = painterResource(R.mipmap.logo),
                 contentDescription = "logo",
                 modifier = Modifier
-                    .width(300.dp)
+                    .width(250.dp)
                     .padding(20.dp)
                     .align(Alignment.CenterHorizontally)
             )
@@ -102,10 +102,12 @@ private fun LoginContent(
                 onLogin(email, password)
             }
         }
+        val context = LocalContext.current
+        val errorMessage = stringResource(id = R.string.error_message)
         uiState?.value?.let { states ->
             when(states) {
                 is Resource.Loading -> {
-                    ShowLoading()
+                    LoadingMessage()
                 }
                 is Resource.Success -> {
                     LaunchedEffect(key1 = "navigation", block = {
@@ -113,7 +115,10 @@ private fun LoginContent(
                     })
                 }
                 is Resource.Error -> {
-                    Toast.makeText(LocalContext.current, stringResource(id = R.string.error_message), Toast.LENGTH_LONG).show()
+                    LaunchedEffect(key1 = "errorMessage", block = {
+                        Toast.makeText(context, errorMessage, Toast.LENGTH_LONG)
+                            .show()
+                    })
                 }
             }
         }
