@@ -8,12 +8,8 @@ class UserRepositoryImpl @Inject constructor(
     private val userAuthentication: UserAuthentication
 ) : UserRepository {
 
-    override fun login(email: String, password: String, callback: (isSuccessful: Boolean) -> Unit) {
-        userAuthentication.login(email, password) { response ->
-            callback.invoke(response)
-        }
-    }
+    override suspend fun login(email: String, password: String) = userAuthentication.login(email, password)
 
-    override fun isUserLoggedIn() = userAuthentication.isUserLoggedIn()
+    override suspend fun isUserLoggedIn() = userAuthentication.isUserLoggedIn()
 
 }

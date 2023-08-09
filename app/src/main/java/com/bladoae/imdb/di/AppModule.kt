@@ -57,8 +57,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideLoginUserUseCase(
-        userRepository: UserRepository
-    ): LoginUserUseCase = LoginUserUseCaseImpl(userRepository)
+        userRepository: UserRepository,
+        dispatcher: CoroutineContext
+    ): LoginUserUseCase = LoginUserUseCaseImpl(userRepository, dispatcher)
 
     @Provides
     @Singleton

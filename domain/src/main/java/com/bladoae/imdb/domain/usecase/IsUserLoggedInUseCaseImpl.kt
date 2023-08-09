@@ -6,6 +6,6 @@ class IsUserLoggedInUseCaseImpl constructor(
     private val userRepository: UserRepository
 ) : IsUserLoggedInUseCase {
 
-    override fun invoke() = userRepository.isUserLoggedIn()
+    override suspend operator fun invoke() = userRepository.isUserLoggedIn()
 
 }

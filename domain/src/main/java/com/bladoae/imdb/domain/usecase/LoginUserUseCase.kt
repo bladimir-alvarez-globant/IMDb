@@ -1,5 +1,7 @@
 package com.bladoae.imdb.domain.usecase
 
+import kotlinx.coroutines.flow.Flow
+
 interface LoginUserUseCase {
-    operator fun invoke(email: String, password: String, callback: (isSuccessful: Boolean) -> Unit)
+    suspend operator fun invoke(email: String, password: String) : Flow<Boolean>
 }
