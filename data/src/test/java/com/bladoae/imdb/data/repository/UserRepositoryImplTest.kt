@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -45,7 +46,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun `when login response is success`() = runBlocking {
+    fun `when login response is success`() = runBlockingTest {
         val email = "blad@gmail.com"
         val password = "1234567"
         val expectedResponse = true
@@ -69,7 +70,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun `when login response is error`() = runBlocking {
+    fun `when login response is error`() = runBlockingTest {
         val email = "blad@gmail.com"
         val password = "1234"
         val expectedResponse = false
@@ -93,7 +94,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun `when createAccount response is success`() = runBlocking {
+    fun `when createAccount response is success`() = runBlockingTest {
         val email = "blad@gmail.com"
         val password = "1234"
         val expectedResponse = true
@@ -117,7 +118,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun `when createAccount response is error`() = runBlocking {
+    fun `when createAccount response is error`() = runBlockingTest {
         val email = "blad@gmail.com"
         val password = "1234"
         val expectedResponse = false
@@ -141,7 +142,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun `when isEmailValid response is success`() = runBlocking {
+    fun `when isEmailValid response is success`() = runBlockingTest {
         val email = "blad@gmail.com"
         val password = "1234"
         val expectedResponse = true
@@ -165,7 +166,7 @@ class UserRepositoryImplTest {
     }
 
     @Test
-    fun `when isEmailValid response is error`() = runBlocking {
+    fun `when isEmailValid response is error`() = runBlockingTest {
         val email = "blad@gmail.com"
         val password = "1234"
         val expectedResponse = false
