@@ -1,19 +1,16 @@
-package com.bladoae.imdb.presentation.login
+package com.bladoae.imdb.presentation.createaccount
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
@@ -28,14 +25,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bladoae.imdb.base.common.Resource
 import com.bladoae.imdb.base.utils.isValidEmail
+import com.bladoae.imdb.base.utils.isValidPassword
 import com.bladoae.imdb.presentation.R
 import com.bladoae.imdb.presentation.common.InputTextBox
 import com.bladoae.imdb.presentation.common.LoadingMessage
@@ -43,31 +39,27 @@ import com.bladoae.imdb.presentation.common.SimpleButton
 import com.bladoae.imdb.presentation.theme.IMDbTheme
 
 @Composable
-fun LoginScreen(
+fun CreateAccountScreen(
     navHostController: NavHostController,
-    loginViewModel: LoginViewModel = hiltViewModel()
+    createAccountViewModel: CreateAccountViewModel = hiltViewModel()
 ) {
-    val uiState = loginViewModel.login.observeAsState()
-    LoginContent(
-        uiState = uiState,
-        onLogin = { email, password ->
-            loginViewModel.loginUser(email, password)
+    val uiState = createAccountViewModel.createAccount.observeAsState()
+    CreateAccountContent(
+        uiState,
+        onSignIn = { email, password ->
+            createAccountViewModel.createAccount(email, password)
         },
         onSuccess = {
             navHostController.navigate("home")
-        },
-        onCreateAccount = {
-            navHostController.navigate("createAccount")
         }
     )
 }
 
 @Composable
-private fun LoginContent(
+private fun CreateAccountContent(
     uiState: State<Resource<Boolean?>?>? = null,
-    onLogin: (email: String, password: String) -> Unit,
-    onSuccess: () -> Unit,
-    onCreateAccount: () -> Unit
+    onSignIn: (email: String, password: String) -> Unit,
+    onSuccess: () -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -77,7 +69,7 @@ private fun LoginContent(
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
 
-        val isLoginEnabled = email.isNotEmpty() && email.isValidEmail() && password.isNotEmpty()
+        val isSignInEnabled = email.isValidEmail() && password.isValidPassword()
 
         Column(
             modifier = Modifier
@@ -106,22 +98,11 @@ private fun LoginContent(
                 password = it.text
             }
             SimpleButton(
-                label = stringResource(id = R.string.login),
-                isLoginEnabled
+                label = stringResource(id = R.string.create_account),
+                isSignInEnabled
             ) {
-                onLogin(email, password)
+                onSignIn(email, password)
             }
-            Text(
-                text = stringResource(id = R.string.create_an_account),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp, 10.dp, 20.dp, 0.dp)
-                    .clickable {
-                        onCreateAccount()
-                    },
-                textAlign = TextAlign.Center,
-                textDecoration = TextDecoration.Underline,
-            )
         }
         val context = LocalContext.current
         val errorMessage = stringResource(id = R.string.error_message)
@@ -148,16 +129,13 @@ private fun LoginContent(
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPreview() {
+fun CreateAccountPreview() {
     IMDbTheme {
-        LoginContent(
-            onLogin = { email: String, password: String ->
+        CreateAccountContent(
+            onSignIn = { email, password ->
 
             },
             onSuccess = {
-
-            },
-            onCreateAccount = {
 
             })
     }

@@ -20,4 +20,18 @@ class UserAuthenticationImpl @Inject constructor(
 
     override suspend fun isUserLoggedIn() = firebaseAuth.currentUser != null
 
+    override suspend fun createAccount(email: String, password: String): Flow<Boolean> {
+        return flow {
+            val response = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            emit(response.user != null)
+        }
+    }
+
+    override suspend fun isEmailValid(email: String): Flow<Boolean> {
+        return flow {
+            val response = firebaseAuth.fetchSignInMethodsForEmail(email).await()
+            emit(response.signInMethods?.isEmpty() ?: true)
+        }
+    }
+
 }
