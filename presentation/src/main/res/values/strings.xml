@@ -7,4 +7,7 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="find_your_favorite_movie">Find your favorite movie</string>
+    <string name="name">Name</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="create_account">Create account</string>
 </resources>

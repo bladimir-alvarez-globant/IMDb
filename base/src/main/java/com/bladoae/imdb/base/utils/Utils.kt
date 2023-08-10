@@ -14,3 +14,14 @@ fun String.isValidEmail(): Boolean {
     )
     return emailAddressPattern.matcher(this).matches()
 }
+
+fun String.isValidPassword(): Boolean {
+    return if(this.length > 8) {
+        val passwordPattern = Pattern.compile(
+            "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}\$"
+        )
+        passwordPattern.matcher(this).matches()
+    } else {
+        false
+    }
+}

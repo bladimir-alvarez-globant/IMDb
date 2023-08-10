@@ -8,6 +8,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.bladoae.imdb.presentation.createaccount.CreateAccountScreen
 import com.bladoae.imdb.presentation.home.HomeScreen
 import com.bladoae.imdb.presentation.login.LoginScreen
 import com.bladoae.imdb.presentation.theme.IMDbTheme
@@ -30,6 +31,9 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController, startDestination = "login") {
                     composable(route = "login") {
                         LoginScreen(navController)
+                    }
+                    composable(route = "createAccount") {
+                        CreateAccountScreen(navController)
                     }
                     composable(route = "home") {
                         HomeScreen()
