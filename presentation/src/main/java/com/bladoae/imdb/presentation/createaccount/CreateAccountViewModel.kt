@@ -15,14 +15,14 @@ class CreateAccountViewModel @Inject constructor(
     private val createAccountUseCase: CreateAccountUseCase
 ) : ViewModel() {
 
-    private val _createUser = MutableLiveData<Resource<Boolean?>?>()
-    val createUser: LiveData<Resource<Boolean?>?> = _createUser
+    private val _createAccount = MutableLiveData<Resource<Boolean?>?>()
+    val createAccount: LiveData<Resource<Boolean?>?> = _createAccount
 
     fun createAccount(email: String, password: String) {
-        _createUser.value = Resource.Loading()
+        _createAccount.value = Resource.Loading()
         viewModelScope.launch {
             createAccountUseCase(email, password).collect { response ->
-                _createUser.value = if (response) Resource.Success(true) else Resource.Error("Error")
+                _createAccount.value = if (response) Resource.Success(true) else Resource.Error("Error")
             }
         }
     }

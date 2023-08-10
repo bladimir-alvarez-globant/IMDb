@@ -92,4 +92,100 @@ class UserRepositoryImplTest {
         )
     }
 
+    @Test
+    fun `when createAccount response is success`() = runBlocking {
+        val email = "blad@gmail.com"
+        val password = "1234"
+        val expectedResponse = true
+        coEvery {
+            userAuthentication.createAccount(email, password)
+        } returns flowOf(true)
+
+        var actualResponse = false
+
+        launch {
+            userRepositoryImpl.createAccount(email, password).collect {
+                actualResponse = it
+            }
+        }
+
+        coVerify(exactly = 1) { userAuthentication.createAccount(email, password) }
+        assertEquals(
+            expectedResponse,
+            actualResponse
+        )
+    }
+
+    @Test
+    fun `when createAccount response is error`() = runBlocking {
+        val email = "blad@gmail.com"
+        val password = "1234"
+        val expectedResponse = false
+        coEvery {
+            userAuthentication.createAccount(email, password)
+        } returns flowOf(false)
+
+        var actualResponse = true
+
+        launch {
+            userRepositoryImpl.createAccount(email, password).collect {
+                actualResponse = it
+            }
+        }
+
+        coVerify(exactly = 1) { userAuthentication.createAccount(email, password) }
+        assertEquals(
+            expectedResponse,
+            actualResponse
+        )
+    }
+
+    @Test
+    fun `when isEmailValid response is success`() = runBlocking {
+        val email = "blad@gmail.com"
+        val password = "1234"
+        val expectedResponse = true
+        coEvery {
+            userAuthentication.isEmailValid(email)
+        } returns flowOf(true)
+
+        var actualResponse = false
+
+        launch {
+            userRepositoryImpl.isEmailValid(email).collect {
+                actualResponse = it
+            }
+        }
+
+        coVerify(exactly = 1) { userAuthentication.isEmailValid(email) }
+        assertEquals(
+            expectedResponse,
+            actualResponse
+        )
+    }
+
+    @Test
+    fun `when isEmailValid response is error`() = runBlocking {
+        val email = "blad@gmail.com"
+        val password = "1234"
+        val expectedResponse = false
+        coEvery {
+            userAuthentication.isEmailValid(email)
+        } returns flowOf(false)
+
+        var actualResponse = true
+
+        launch {
+            userRepositoryImpl.isEmailValid(email).collect {
+                actualResponse = it
+            }
+        }
+
+        coVerify(exactly = 1) { userAuthentication.isEmailValid(email) }
+        assertEquals(
+            expectedResponse,
+            actualResponse
+        )
+    }
+
 }

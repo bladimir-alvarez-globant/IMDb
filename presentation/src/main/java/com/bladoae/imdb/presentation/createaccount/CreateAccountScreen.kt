@@ -43,7 +43,7 @@ fun CreateAccountScreen(
     navHostController: NavHostController,
     createAccountViewModel: CreateAccountViewModel = hiltViewModel()
 ) {
-    val uiState = createAccountViewModel.createUser.observeAsState()
+    val uiState = createAccountViewModel.createAccount.observeAsState()
     CreateAccountContent(
         uiState,
         onSignIn = { email, password ->
