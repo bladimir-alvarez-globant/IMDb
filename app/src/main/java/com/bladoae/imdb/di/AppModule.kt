@@ -32,6 +32,11 @@ object AppModule {
 
     @Provides
     @Singleton
+    @Named("baseImageUrl")
+    fun baseImageUrlProvider(): String = BuildConfig.BASE_IMAGE_URL
+
+    @Provides
+    @Singleton
     @Named("apiKey")
     fun apiKeyProvider(): String = BuildConfig.API_KEY
 

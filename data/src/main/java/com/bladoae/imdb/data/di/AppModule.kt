@@ -44,9 +44,10 @@ object AppModule {
     fun provideMovieRepository(
         movieApiService: MovieApiService,
         movieDao: MovieDao,
-        dispatcher: CoroutineContext
+        dispatcher: CoroutineContext,
+        @Named("baseImageUrl") baseImageUrl: String
     ) : MovieRepository {
-        return MovieRepositoryImpl(movieApiService, movieDao, dispatcher)
+        return MovieRepositoryImpl(movieApiService, movieDao, dispatcher, baseImageUrl)
     }
 
     @Provides
