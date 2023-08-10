@@ -3,8 +3,10 @@ package com.bladoae.imdb.data.repository
 import com.bladoae.imdb.base.common.Resource
 import com.bladoae.imdb.data.apiservice.MovieApiService
 import com.bladoae.imdb.data.mappers.toMovieEntityList
+import com.bladoae.imdb.data.mappers.toMovieList
 import com.bladoae.imdb.data.mappers.toTopRated
 import com.bladoae.imdb.databasemanager.daos.MovieDao
+import com.bladoae.imdb.domain.model.Movie
 import com.bladoae.imdb.domain.model.TopRated
 import com.bladoae.imdb.domain.repository.MovieRepository
 import javax.inject.Inject
@@ -44,6 +46,18 @@ class MovieRepositoryImpl @Inject constructor(
                 .collect {
                     emit(it)
                 }
+        }.flowOn(dispatcher)
+    }
+
+    override suspend fun getMoviesByName(name: String): Flow<List<Movie>?> {
+        return flow {
+            val response = movieDao.selectMovie(name)
+            val movies = if (response.isNotEmpty()) {
+                response.toMovieList()
+            } else {
+                null
+            }
+            emit(movies)
         }.flowOn(dispatcher)
     }
 }

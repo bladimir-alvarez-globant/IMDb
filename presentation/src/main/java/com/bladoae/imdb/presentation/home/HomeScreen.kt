@@ -16,6 +16,7 @@ import com.bladoae.imdb.domain.model.TopRated
 import com.bladoae.imdb.presentation.common.ErrorMessage
 import com.bladoae.imdb.presentation.common.LoadingMessage
 import com.bladoae.imdb.presentation.home.components.ListMovie
+import com.bladoae.imdb.presentation.home.components.SearchBox
 import com.bladoae.imdb.presentation.theme.IMDbTheme
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 
@@ -28,7 +29,8 @@ fun HomeScreen(
     val uiState = homeViewModel.topRatedMovies.observeAsState(Resource.Loading())
     HomeContent(
         uiState = uiState,
-        onRetry = { homeViewModel.onRetry() }
+        onRetry = { homeViewModel.onRetry() },
+        onSearch = { value -> homeViewModel.getMovieByName(value) }
     )
 }
 
@@ -38,12 +40,16 @@ fun HomeScreen(
 private fun HomeContent(
     uiState: State<Resource<TopRated>>,
     onRetry: () -> Unit,
+    onSearch: (value: String) -> Unit
 ) {
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         when(uiState.value) {
-            is Resource.Loading -> LoadingMessage()
+            is Resource.Loading -> {
+                LoadingMessage()
+            }
             is Resource.Success -> {
                 Column {
+                    SearchBox(onSearch = onSearch)
                     uiState.value.data?.results?.let { items ->
                         ListMovie(items)
                     }
