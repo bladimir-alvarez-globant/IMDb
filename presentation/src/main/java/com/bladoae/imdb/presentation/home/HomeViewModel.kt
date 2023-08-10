@@ -1,5 +1,6 @@
 package com.bladoae.imdb.presentation.home
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,8 @@ class HomeViewModel @Inject constructor(
     private val _topRatedMovies = MutableLiveData<Resource<TopRated>>()
     val topRatedMovies: LiveData<Resource<TopRated>> by lazy { _topRatedMovies.apply { getTopRatedMovies() } }
 
-    private fun getTopRatedMovies() {
+    @VisibleForTesting
+    fun getTopRatedMovies() {
         _topRatedMovies.value = Resource.Loading()
         viewModelScope.launch {
             getTopRatedMoviesUseCase().collect { response ->

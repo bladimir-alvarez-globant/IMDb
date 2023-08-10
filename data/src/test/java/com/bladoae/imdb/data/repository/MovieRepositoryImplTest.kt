@@ -6,8 +6,11 @@ import com.bladoae.imdb.data.MainCoroutineRule
 import com.bladoae.imdb.data.apiservice.MovieApiService
 import com.bladoae.imdb.data.mappers.toMovie
 import com.bladoae.imdb.data.mappers.toMovieEntity
+import com.bladoae.imdb.data.mappers.toMovieList
 import com.bladoae.imdb.data.mappers.toTopRated
 import com.bladoae.imdb.databasemanager.daos.MovieDao
+import com.bladoae.imdb.databasemanager.entities.MovieEntity
+import com.bladoae.imdb.domain.model.Movie
 import com.bladoae.imdb.domain.model.TopRated
 import com.bladoae.imdb.requestmanager.model.MovieDto
 import com.bladoae.imdb.requestmanager.model.TopRatedResponse
@@ -44,10 +47,12 @@ class MovieRepositoryImplTest {
     @MockK
     private lateinit var movieDao: MovieDao
 
+    private val baseImageUrl = "baseImageUrl"
+
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        movieRepositoryImpl = MovieRepositoryImpl(movieApiService, movieDao, Dispatchers.IO)
+        movieRepositoryImpl = MovieRepositoryImpl(movieApiService, movieDao, Dispatchers.IO, baseImageUrl)
     }
 
     @After
@@ -74,7 +79,7 @@ class MovieRepositoryImplTest {
             )
         )
 
-        val movieEntity = movie.toMovie().toMovieEntity()
+        val movieEntity = movie.toMovie(baseImageUrl).toMovieEntity()
         coEvery {
             movieDao.insertMovie(listOf(movieEntity))
         } returns Unit
@@ -91,12 +96,45 @@ class MovieRepositoryImplTest {
 
         coVerify(exactly = 1) { movieApiService.getTopRatedMovies() }
         assertEquals(
-            expectedResponse.data?.toTopRated(),
+            expectedResponse.data?.toTopRated(baseImageUrl),
             actualResponse
         )
         assertEquals(
             "Name must be $movieTitle.",
             actualResponse.results?.first()?.title,
+            movieTitle
+        )
+    }
+
+    @Test
+    fun `when getMoviesByName response is success`() = runBlocking {
+        val movieTitle = "Transformers"
+        val movie = MovieEntity(
+            id = 1000,
+            title = "Transformers"
+        )
+        val expectedResponse = listOf(
+            movie
+        )
+
+        coEvery {
+            movieDao.selectMovie(movieTitle)
+        } returns expectedResponse
+
+        var actualResponse = listOf<Movie>()
+        launch {
+            movieRepositoryImpl.getMoviesByName(movieTitle)
+                .collect { response -> actualResponse = response ?: listOf() }
+        }
+
+        coVerify(exactly = 1) { movieDao.selectMovie(movieTitle) }
+        assertEquals(
+            expectedResponse.toMovieList(),
+            actualResponse
+        )
+        assertEquals(
+            "Name must be $movieTitle.",
+            actualResponse.first().title,
             movieTitle
         )
     }
