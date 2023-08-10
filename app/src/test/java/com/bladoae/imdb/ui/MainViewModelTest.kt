@@ -1,24 +1,23 @@
-package com.bladoae.imdb.presentation.login
+package com.bladoae.imdb.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.bladoae.imdb.domain.usecase.LoginUserUseCase
-import com.bladoae.imdb.presentation.MainCoroutineRule
+import com.bladoae.imdb.MainCoroutineRule
+import com.bladoae.imdb.domain.usecase.IsUserLoggedInUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class LoginViewModelTest {
+class MainViewModelTest {
 
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
@@ -26,16 +25,16 @@ class LoginViewModelTest {
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var viewModel: MainViewModel
 
     @MockK
-    private lateinit var loginUserUseCase: LoginUserUseCase
+    private lateinit var isUserLoggedInUseCase: IsUserLoggedInUseCase
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        viewModel = LoginViewModel(
-            loginUserUseCase
+        viewModel = MainViewModel(
+            isUserLoggedInUseCase
         )
     }
 
@@ -45,20 +44,18 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `when loginUser response is success`() = runBlockingTest {
-        val email = "blad@gmail.com"
-        val password = "123"
+    fun `when isUserLoggedIn response is success`() = runBlockingTest {
         val expectedResponse = true
         coEvery {
-            loginUserUseCase(email, password)
-        } returns flowOf(true)
+            isUserLoggedInUseCase()
+        } returns true
 
-        viewModel.loginUser(email, password)
+        viewModel.isUserLoggedIn()
         viewModel.login.observeForever {}
 
         val actualResponse = viewModel.login.value
 
-        assertEquals(expectedResponse, actualResponse?.data)
+        Assert.assertEquals(expectedResponse, actualResponse?.data)
     }
 
 }
