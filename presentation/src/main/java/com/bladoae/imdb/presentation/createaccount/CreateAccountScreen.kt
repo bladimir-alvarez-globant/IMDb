@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.bladoae.imdb.base.common.NavigationOptions
 import com.bladoae.imdb.base.common.Resource
 import com.bladoae.imdb.base.utils.isValidEmail
 import com.bladoae.imdb.base.utils.isValidPassword
@@ -50,7 +51,7 @@ fun CreateAccountScreen(
             createAccountViewModel.createAccount(email, password)
         },
         onSuccess = {
-            navHostController.navigate("home")
+            navHostController.navigate(NavigationOptions.HOME.path)
         }
     )
 }
