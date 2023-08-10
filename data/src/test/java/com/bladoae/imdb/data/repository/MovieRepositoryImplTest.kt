@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -61,7 +62,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `when get top rated movies response is success`() = runBlocking {
+    fun `when get top rated movies response is success`() = runBlockingTest {
         val movieTitle = "Transformers"
         val movie = MovieDto(
             id = 1000,
@@ -107,7 +108,7 @@ class MovieRepositoryImplTest {
     }
 
     @Test
-    fun `when getMoviesByName response is success`() = runBlocking {
+    fun `when getMoviesByName response is success`() = runBlockingTest {
         val movieTitle = "Transformers"
         val movie = MovieEntity(
             id = 1000,
