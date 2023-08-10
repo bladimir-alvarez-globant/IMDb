@@ -3,6 +3,8 @@ package com.bladoae.imdb.di
 import com.bladoae.imdb.BuildConfig
 import com.bladoae.imdb.domain.repository.MovieRepository
 import com.bladoae.imdb.domain.repository.UserRepository
+import com.bladoae.imdb.domain.usecase.GetMovieByNameUseCase
+import com.bladoae.imdb.domain.usecase.GetMovieByNameUseCaseImpl
 import com.bladoae.imdb.domain.usecase.GetTopRatedMoviesUseCase
 import com.bladoae.imdb.domain.usecase.GetTopRatedMoviesUseCaseImpl
 import com.bladoae.imdb.domain.usecase.IsUserLoggedInUseCase
@@ -29,6 +31,11 @@ object AppModule {
     @Singleton
     @Named("baseBackendUrl")
     fun baseBackendUrlProvider(): String = BuildConfig.BASE_BE_URL
+
+    @Provides
+    @Singleton
+    @Named("baseImageUrl")
+    fun baseImageUrlProvider(): String = BuildConfig.BASE_IMAGE_URL
 
     @Provides
     @Singleton
@@ -66,5 +73,12 @@ object AppModule {
     fun provideIsUserLoggedInUseCaseUseCase(
         userRepository: UserRepository
     ): IsUserLoggedInUseCase = IsUserLoggedInUseCaseImpl(userRepository)
+
+    @Provides
+    @Singleton
+    fun provideGetMovieByNameUseCase(
+        movieRepository: MovieRepository,
+        dispatcher: CoroutineContext
+    ): GetMovieByNameUseCase = GetMovieByNameUseCaseImpl(movieRepository, dispatcher)
 
 }

@@ -3,7 +3,9 @@ package com.bladoae.imdb.data.mappers
 import com.bladoae.imdb.domain.model.Movie
 import com.bladoae.imdb.requestmanager.model.MovieDto
 
-fun MovieDto.toMovie() = Movie(
+fun MovieDto.toMovie(
+    baseImageUrl: String
+) = Movie(
     adult,
     backdropPath,
     genreIds,
@@ -12,7 +14,7 @@ fun MovieDto.toMovie() = Movie(
     originalTitle,
     overview,
     popularity,
-    posterPath,
+    "$baseImageUrl$posterPath",
     releaseDate,
     title,
     video,
@@ -20,4 +22,6 @@ fun MovieDto.toMovie() = Movie(
     voteCount
 )
 
-fun List<MovieDto>.toMovieList() = map(MovieDto::toMovie)
+fun List<MovieDto>.toMovieList(baseImageUrl: String) = map {
+    it.toMovie(baseImageUrl)
+}

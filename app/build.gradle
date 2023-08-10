@@ -30,10 +30,12 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_BE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "BASE_IMAGE_URL", "\"https://image.tmdb.org/t/p/w500\"")
             buildConfigField("String", "API_KEY", "\"c5c47722a4adcc77f6e84f28a48b857a\"")
         }
         release {
             buildConfigField("String", "BASE_BE_URL", "\"https://api.themoviedb.org/3/\"")
+            buildConfigField("String", "BASE_IMAGE_URL", "\"https://image.tmdb.org/t/p/w500\"")
             buildConfigField("String", "API_KEY", "\"c5c47722a4adcc77f6e84f28a48b857a\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
