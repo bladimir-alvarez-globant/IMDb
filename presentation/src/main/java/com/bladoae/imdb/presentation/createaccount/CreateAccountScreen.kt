@@ -1,5 +1,6 @@
 package com.bladoae.imdb.presentation.createaccount
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +12,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -25,10 +29,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.bladoae.imdb.base.common.Resource
 import com.bladoae.imdb.base.utils.isValidEmail
 import com.bladoae.imdb.base.utils.isValidPassword
 import com.bladoae.imdb.presentation.R
 import com.bladoae.imdb.presentation.common.InputTextBox
+import com.bladoae.imdb.presentation.common.LoadingMessage
 import com.bladoae.imdb.presentation.common.SimpleButton
 import com.bladoae.imdb.presentation.theme.IMDbTheme
 
@@ -37,19 +43,22 @@ fun CreateAccountScreen(
     navHostController: NavHostController,
     createAccountViewModel: CreateAccountViewModel = hiltViewModel()
 ) {
-    //val uiState = loginViewModel.login.observeAsState()
+    val uiState = createAccountViewModel.createUser.observeAsState()
     CreateAccountContent(
-        onSignIn = { name, email, password ->
-
+        uiState,
+        onSignIn = { email, password ->
+            createAccountViewModel.createAccount(email, password)
+        },
+        onSuccess = {
+            navHostController.navigate("home")
         }
-    ) {
-        navHostController.navigate("home")
-    }
+    )
 }
 
 @Composable
 private fun CreateAccountContent(
-    onSignIn: (name: String, email: String, password: String) -> Unit,
+    uiState: State<Resource<Boolean?>?>? = null,
+    onSignIn: (email: String, password: String) -> Unit,
     onSuccess: () -> Unit
 ) {
     Surface(
@@ -57,11 +66,10 @@ private fun CreateAccountContent(
             .fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        var name by remember { mutableStateOf("") }
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
 
-        val isSignInEnabled = name.isNotEmpty() && email.isValidEmail() && password.isValidPassword()
+        val isSignInEnabled = email.isValidEmail() && password.isValidPassword()
 
         Column(
             modifier = Modifier
@@ -78,12 +86,6 @@ private fun CreateAccountContent(
                     .align(Alignment.CenterHorizontally)
             )
             InputTextBox(
-                hint = stringResource(id = R.string.name),
-                typePassword = false
-            ) {
-                name = it.text
-            }
-            InputTextBox(
                 hint = stringResource(id = R.string.email),
                 typePassword = false
             ) {
@@ -99,12 +101,12 @@ private fun CreateAccountContent(
                 label = stringResource(id = R.string.create_account),
                 isSignInEnabled
             ) {
-                onSignIn(name, email, password)
+                onSignIn(email, password)
             }
         }
         val context = LocalContext.current
         val errorMessage = stringResource(id = R.string.error_message)
-        /*uiState?.value?.let { states ->
+        uiState?.value?.let { states ->
             when(states) {
                 is Resource.Loading -> {
                     LoadingMessage()
@@ -121,7 +123,7 @@ private fun CreateAccountContent(
                     })
                 }
             }
-        }*/
+        }
     }
 }
 
@@ -130,7 +132,7 @@ private fun CreateAccountContent(
 fun CreateAccountPreview() {
     IMDbTheme {
         CreateAccountContent(
-            onSignIn = { name, email, password ->
+            onSignIn = { email, password ->
 
             },
             onSuccess = {

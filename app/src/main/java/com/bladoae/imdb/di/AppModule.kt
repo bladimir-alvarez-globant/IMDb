@@ -3,6 +3,8 @@ package com.bladoae.imdb.di
 import com.bladoae.imdb.BuildConfig
 import com.bladoae.imdb.domain.repository.MovieRepository
 import com.bladoae.imdb.domain.repository.UserRepository
+import com.bladoae.imdb.domain.usecase.CreateAccountUseCase
+import com.bladoae.imdb.domain.usecase.CreateAccountUseCaseImpl
 import com.bladoae.imdb.domain.usecase.GetMovieByNameUseCase
 import com.bladoae.imdb.domain.usecase.GetMovieByNameUseCaseImpl
 import com.bladoae.imdb.domain.usecase.GetTopRatedMoviesUseCase
@@ -80,5 +82,12 @@ object AppModule {
         movieRepository: MovieRepository,
         dispatcher: CoroutineContext
     ): GetMovieByNameUseCase = GetMovieByNameUseCaseImpl(movieRepository, dispatcher)
+
+    @Provides
+    @Singleton
+    fun provideCreateAccountUseCase(
+        userRepository: UserRepository,
+        dispatcher: CoroutineContext
+    ): CreateAccountUseCase = CreateAccountUseCaseImpl(userRepository, dispatcher)
 
 }

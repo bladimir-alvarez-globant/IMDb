@@ -12,4 +12,7 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun isUserLoggedIn() = userAuthentication.isUserLoggedIn()
 
+    override suspend fun createAccount(email: String, password: String) = userAuthentication.createAccount(email, password)
+    override suspend fun isEmailValid(email: String) = userAuthentication.isEmailValid(email)
+
 }
