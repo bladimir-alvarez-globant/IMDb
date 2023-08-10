@@ -15,7 +15,9 @@ import com.bladoae.imdb.domain.usecase.LoginUserUseCase
 import com.bladoae.imdb.domain.usecase.LoginUserUseCaseImpl
 import com.bladoae.imdb.domain.usermanager.UserAuthentication
 import com.bladoae.imdb.usermanager.UserAuthenticationImpl
+import com.bladoae.imdb.utils.KotlinJsonAdapterFactory
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +35,14 @@ object AppModule {
     @Singleton
     @Named("baseBackendUrl")
     fun baseBackendUrlProvider(): String = BuildConfig.BASE_BE_URL
+
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+    }
 
     @Provides
     @Singleton

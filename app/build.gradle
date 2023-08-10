@@ -67,6 +67,8 @@ dependencies {
     implementation project(':data')
     implementation project(':presentation')
     implementation project(':framework:usermanager')
+    implementation project(':framework:databasemanager')
+    implementation project(':framework:requestmanager')
 
     project.base_dependencies.each { item ->
         add(item.configuration, item.dependency, item.options)
@@ -111,6 +113,10 @@ dependencies {
     }
 
     project.androidx_core_splashscreen_dependencies.each { item ->
+        add(item.configuration, item.dependency, item.options)
+    }
+
+    project.moshi_dependencies.each { item ->
         add(item.configuration, item.dependency, item.options)
     }
 }

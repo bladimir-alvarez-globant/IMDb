@@ -35,6 +35,8 @@ android {
 }
 
 dependencies {
+    implementation project(':base')
+
     project.base_dependencies.each { item ->
         add(item.configuration, item.dependency, item.options)
     }

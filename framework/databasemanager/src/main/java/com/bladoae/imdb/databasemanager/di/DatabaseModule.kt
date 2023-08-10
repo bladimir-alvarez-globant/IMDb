@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.bladoae.imdb.databasemanager.ImdbDatabase
 import com.bladoae.imdb.databasemanager.RoomConverters
 import com.bladoae.imdb.databasemanager.daos.MovieDao
-import com.bladoae.imdb.databasemanager.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -20,7 +19,10 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context, moshi: Moshi): ImdbDatabase {
+    fun provideDatabase(
+        @ApplicationContext context: Context,
+        moshi: Moshi
+    ): ImdbDatabase {
         return Room.databaseBuilder(
             context,
             ImdbDatabase::class.java,
@@ -28,14 +30,6 @@ object DatabaseModule {
         )
             .addTypeConverter(RoomConverters(moshi))
             .fallbackToDestructiveMigration()
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
             .build()
     }
 

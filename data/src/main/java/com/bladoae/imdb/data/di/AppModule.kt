@@ -10,6 +10,8 @@ import com.bladoae.imdb.domain.repository.UserRepository
 import com.bladoae.imdb.domain.usermanager.UserAuthentication
 import com.bladoae.imdb.requestmanager.ApiService
 import com.bladoae.imdb.requestmanager.manager.ServiceGenerator
+import com.bladoae.imdb.requestmanager.utils.NetworkConnectivity
+import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,9 +27,11 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApiService(
-        @Named("baseBackendUrl") baseBackendUrl: String
+        @Named("baseBackendUrl") baseBackendUrl: String,
+        networkConnectivity: NetworkConnectivity,
+        moshi: Moshi
     ): ApiService {
-        return ServiceGenerator(baseBackendUrl).createService()
+        return ServiceGenerator(baseBackendUrl, networkConnectivity, moshi).createService()
     }
 
     @Provides
